@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot de Mensajería Telegram</title>
+    <title>Bot de Mensajería con Contacto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -23,28 +24,50 @@
         
         .container {
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            max-width: 600px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #0088cc, #25D366, #ea4335);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #0088cc;
         }
         
         h1 {
             color: #333;
-            text-align: center;
             margin-bottom: 10px;
+            font-size: 28px;
         }
         
         .description {
-            text-align: center;
             color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            font-size: 16px;
+            line-height: 1.5;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         label {
@@ -52,50 +75,81 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: #444;
+            display: flex;
+            align-items: center;
+        }
+        
+        label i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .contact-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .contact-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
         
         textarea {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 10px;
             resize: vertical;
-            min-height: 120px;
-            font-size: 14px;
-            transition: border-color 0.3s;
+            min-height: 150px;
+            font-size: 16px;
+            transition: all 0.3s;
         }
         
         textarea:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
         
         .button-container {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 30px;
         }
         
         button {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 14px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button i {
+            margin-right: 8px;
         }
         
         #sendButton {
-            background-color: #667eea;
+            background: linear-gradient(to right, #667eea, #764ba2);
             color: white;
         }
         
         #sendButton:hover {
-            background-color: #5a6fd8;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(102, 126, 234, 0.4);
         }
         
         #clearButton {
@@ -105,12 +159,13 @@
         
         #clearButton:hover {
             background-color: #e4e6e8;
+            transform: translateY(-2px);
         }
         
         .status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
             font-weight: 500;
             display: none;
@@ -137,37 +192,117 @@
         .footer {
             margin-top: 30px;
             text-align: center;
-            font-size: 12px;
+            font-size: 14px;
             color: #888;
         }
         
-        .telegram-icon {
-            font-size: 24px;
+        .contact-options {
+            display: flex;
+            gap: 10px;
             margin-bottom: 15px;
+        }
+        
+        .contact-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .contact-option.active {
+            border-color: #667eea;
+            background-color: #f0f4ff;
+        }
+        
+        .contact-option i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .telegram-option i {
             color: #0088cc;
+        }
+        
+        .whatsapp-option i {
+            color: #25D366;
+        }
+        
+        .email-option i {
+            color: #ea4335;
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            .contact-options {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="telegram-icon">📱</div>
-        <h1>Bot de Mensajería</h1>
-        <p class="description">Envía mensajes a través de Telegram usando el bot configurado</p>
-        
-        <div class="form-group">
-            <label for="message">Mensaje:</label>
-            <textarea id="message" placeholder="Escribe tu mensaje aquí..."></textarea>
+        <div class="header">
+            <div class="logo">
+                <i class="fab fa-telegram"></i>
+            </div>
+            <h1>Formulario de Contacto</h1>
+            <p class="description">Completa al menos un método de contacto y tu mensaje. La información se enviará a través de Telegram.</p>
         </div>
         
-        <div class="button-container">
-            <button id="sendButton">Enviar Mensaje</button>
-            <button id="clearButton">Limpiar</button>
-        </div>
-        
-        <div id="status" class="status"></div>
+        <form id="contactForm">
+            <div class="form-group">
+                <div class="contact-options">
+                    <div class="contact-option telegram-option active" data-type="telegram">
+                        <i class="fab fa-telegram"></i>
+                        <div>Telegram</div>
+                    </div>
+                    <div class="contact-option whatsapp-option" data-type="whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>WhatsApp</div>
+                    </div>
+                    <div class="contact-option email-option" data-type="email">
+                        <i class="fas fa-envelope"></i>
+                        <div>Email</div>
+                    </div>
+                </div>
+                
+                <div id="contactFields">
+                    <div class="form-group">
+                        <label for="telegram"><i class="fab fa-telegram"></i>Usuario de Telegram:</label>
+                        <input type="text" id="telegram" class="contact-input" placeholder="@usuario_telegram">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="message"><i class="fas fa-comment-alt"></i>Mensaje:</label>
+                <textarea id="message" placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+            
+            <div class="button-container">
+                <button type="button" id="sendButton">
+                    <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                </button>
+                <button type="button" id="clearButton">
+                    <i class="fas fa-eraser"></i> Limpiar
+                </button>
+            </div>
+            
+            <div id="status" class="status"></div>
+        </form>
         
         <div class="footer">
-            <p>Este servicio utiliza la API de Telegram para enviar mensajes</p>
+            <p>La información se enviará a través del bot de Telegram</p>
         </div>
     </div>
 
@@ -176,13 +311,52 @@
         $(document).ready(function() {
             const botToken = '8157586356:AAGCyVhrGzUhdziV6b9AZsfLkBvqcuL70_k';
             const chatId = '394034313';
+            let currentContactType = 'telegram';
+            
+            // Manejar selección de tipo de contacto
+            $('.contact-option').click(function() {
+                $('.contact-option').removeClass('active');
+                $(this).addClass('active');
+                currentContactType = $(this).data('type');
+                updateContactField();
+            });
+            
+            // Actualizar campo de contacto según el tipo seleccionado
+            function updateContactField() {
+                let fieldHTML = '';
+                
+                if (currentContactType === 'telegram') {
+                    fieldHTML = `
+                        <div class="form-group">
+                            <label for="telegram"><i class="fab fa-telegram"></i>Usuario de Telegram:</label>
+                            <input type="text" id="telegram" class="contact-input" placeholder="@usuario_telegram">
+                        </div>
+                    `;
+                } else if (currentContactType === 'whatsapp') {
+                    fieldHTML = `
+                        <div class="form-group">
+                            <label for="whatsapp"><i class="fab fa-whatsapp"></i>Número de WhatsApp:</label>
+                            <input type="text" id="whatsapp" class="contact-input" placeholder="+1234567890">
+                        </div>
+                    `;
+                } else if (currentContactType === 'email') {
+                    fieldHTML = `
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i>Correo Electrónico:</label>
+                            <input type="email" id="email" class="contact-input" placeholder="usuario@ejemplo.com">
+                        </div>
+                    `;
+                }
+                
+                $('#contactFields').html(fieldHTML);
+            }
             
             // Función para mostrar estado
             function showStatus(message, type) {
                 const status = $('#status');
                 status.removeClass('success error info');
                 status.addClass(type);
-                status.text(message);
+                status.html(`<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${message}`);
                 status.fadeIn();
                 
                 setTimeout(function() {
@@ -193,17 +367,49 @@
             // Enviar mensaje
             $('#sendButton').click(function() {
                 const message = $('#message').val().trim();
+                let contactValue = '';
+                
+                // Obtener valor del campo de contacto según el tipo seleccionado
+                if (currentContactType === 'telegram') {
+                    contactValue = $('#telegram').val().trim();
+                } else if (currentContactType === 'whatsapp') {
+                    contactValue = $('#whatsapp').val().trim();
+                } else if (currentContactType === 'email') {
+                    contactValue = $('#email').val().trim();
+                }
                 
                 if (!message) {
                     showStatus('Por favor, escribe un mensaje antes de enviar.', 'error');
                     return;
                 }
                 
+                if (!contactValue) {
+                    showStatus(`Por favor, proporciona tu ${currentContactType === 'telegram' ? 'usuario de Telegram' : currentContactType === 'whatsapp' ? 'número de WhatsApp' : 'correo electrónico'}.`, 'error');
+                    return;
+                }
+                
+                // Crear mensaje estructurado para Telegram
+                let formattedMessage = '';
+                
+                if (currentContactType === 'telegram') {
+                    formattedMessage = `📱 <b>Nuevo mensaje de contacto</b>\n\n` +
+                                      `👤 <b>Usuario de Telegram:</b> ${contactValue}\n\n` +
+                                      `💬 <b>Mensaje:</b>\n${message}`;
+                } else if (currentContactType === 'whatsapp') {
+                    formattedMessage = `📱 <b>Nuevo mensaje de contacto</b>\n\n` +
+                                      `📞 <b>WhatsApp:</b> ${contactValue}\n\n` +
+                                      `💬 <b>Mensaje:</b>\n${message}`;
+                } else if (currentContactType === 'email') {
+                    formattedMessage = `📱 <b>Nuevo mensaje de contacto</b>\n\n` +
+                                      `📧 <b>Email:</b> ${contactValue}\n\n` +
+                                      `💬 <b>Mensaje:</b>\n${message}`;
+                }
+                
                 // Mostrar estado de envío
                 showStatus('Enviando mensaje...', 'info');
                 
                 // Deshabilitar botón mientras se envía
-                $('#sendButton').prop('disabled', true).text('Enviando...');
+                $('#sendButton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
                 
                 // Enviar mensaje a través de la API de Telegram
                 $.ajax({
@@ -211,13 +417,21 @@
                     method: 'POST',
                     data: {
                         chat_id: chatId,
-                        text: message,
+                        text: formattedMessage,
                         parse_mode: 'HTML'
                     },
                     success: function(response) {
                         if (response.ok) {
                             showStatus('¡Mensaje enviado correctamente!', 'success');
+                            // Limpiar formulario
                             $('#message').val('');
+                            if (currentContactType === 'telegram') {
+                                $('#telegram').val('');
+                            } else if (currentContactType === 'whatsapp') {
+                                $('#whatsapp').val('');
+                            } else if (currentContactType === 'email') {
+                                $('#email').val('');
+                            }
                         } else {
                             showStatus('Error al enviar el mensaje: ' + response.description, 'error');
                         }
@@ -227,15 +441,22 @@
                     },
                     complete: function() {
                         // Restaurar botón
-                        $('#sendButton').prop('disabled', false).text('Enviar Mensaje');
+                        $('#sendButton').prop('disabled', false).html('<i class="fas fa-paper-plane"></i> Enviar Mensaje');
                     }
                 });
             });
             
-            // Limpiar mensaje
+            // Limpiar formulario
             $('#clearButton').click(function() {
                 $('#message').val('');
-                showStatus('Campo de mensaje limpiado', 'info');
+                if (currentContactType === 'telegram') {
+                    $('#telegram').val('');
+                } else if (currentContactType === 'whatsapp') {
+                    $('#whatsapp').val('');
+                } else if (currentContactType === 'email') {
+                    $('#email').val('');
+                }
+                showStatus('Formulario limpiado', 'info');
             });
             
             // Permitir enviar con Ctrl+Enter
