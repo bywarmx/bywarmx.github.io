@@ -7,47 +7,39 @@
   <link rel="shortcut icon" href="files/images/vngicon.png" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:900,700,400&display=swap" rel="stylesheet">
   <style>
-    body {
+    :root {
+      --bg-main: #181824;
+      --bg-card: #22223b;
+      --accent: #eebbc3;
+      --accent2: #3f72af;
+      --text-main: #eaeaea;
+      --text-muted: #9ca3af;
+    }
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       min-height: 100vh;
-      background: radial-gradient(ellipse at 70% 40%, #24243e 0%, #16161a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--bg-main);
       overflow: hidden;
       font-family: 'Montserrat', Verdana, Arial, sans-serif;
-    }
-    .glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 480px;
-      height: 480px;
-      background: radial-gradient(circle, #3f72af30 1%, #16161a00 70%);
-      filter: blur(56px);
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.6;
-      animation: pulseGlow 3.5s infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { opacity: 0.6;}
-      100% { opacity: 1;}
     }
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(29, 30, 38, 0.92);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.30);
+      background: var(--bg-card);
+      border-radius: 22px;
+      box-shadow: 0 8px 36px rgba(34,34,59,0.38);
       padding: 58px 42px 38px 42px;
       max-width: 370px;
       width: 100%;
       text-align: center;
-      border: 1.5px solid #3f72af55;
+      border: 1.5px solid var(--accent2);
       animation: slideDown 0.9s cubic-bezier(.22,.68,.62,1.11);
+      margin: auto;
+      top: 0; left: 0; right: 0; bottom: 0;
+      position: absolute;
+      height: fit-content;
     }
     @keyframes slideDown {
       from { opacity: 0; transform: translateY(-48px);}
@@ -62,7 +54,7 @@
       box-shadow: 0 2px 20px #3f72af33;
       background: #16161a;
       object-fit: cover;
-      border: 2px solid #eebbc3;
+      border: 2px solid var(--accent);
       animation: spinLogo 1.8s cubic-bezier(.22,.68,.62,1.11) 1;
     }
     @keyframes spinLogo {
@@ -72,7 +64,7 @@
     .main-title {
       font-size: 2.7rem;
       font-weight: 900;
-      color: #eebbc3;
+      color: var(--accent);
       letter-spacing: 2.5px;
       margin-bottom: 12px;
       filter: drop-shadow(0 2px 12px #eebbc360);
@@ -81,43 +73,45 @@
     }
     .sub-title {
       font-size: 1.13rem;
-      color: #9ac7e2;
+      color: var(--accent2);
       font-weight: 700;
       letter-spacing: 1.2px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       text-transform: uppercase;
-      opacity: 0.96;
+      opacity: 0.93;
     }
-    .tagline {
+    .desc {
       font-size: 1rem;
-      color: #eaeaea;
+      color: var(--text-main);
       font-weight: 400;
       letter-spacing: 1px;
-      margin-bottom: 8px;
-      opacity: 0.85;
+      margin-bottom: 24px;
+      opacity: 0.86;
       font-family: 'Montserrat', Verdana, Arial, sans-serif;
+      line-height: 1.6;
     }
     .chip {
       display: inline-block;
-      background: linear-gradient(90deg, #3f72af 0%, #eebbc3 100%);
-      color: #16161a;
-      font-size: 0.95rem;
+      background: linear-gradient(90deg, var(--accent2) 0%, var(--accent) 100%);
+      color: #181824;
+      font-size: 0.99rem;
       font-weight: 700;
       border-radius: 12px;
-      padding: 7px 18px;
-      margin: 12px 0 18px 0;
+      padding: 8px 20px;
+      margin: 14px 0 18px 0;
       box-shadow: 0 2px 12px #eebbc370;
-      letter-spacing: 1.15px;
-      opacity: 0.93;
+      letter-spacing: 1.1px;
+      opacity: 0.96;
       user-select: none;
       border: none;
+      text-transform: uppercase;
     }
     footer {
-      font-size: 0.86rem;
-      color: #3e3e54;
-      margin-top: 26px;
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      margin-top: 22px;
       letter-spacing: 1px;
-      opacity: 0.68;
+      opacity: 0.7;
     }
     /* Responsive */
     @media (max-width: 480px) {
@@ -133,21 +127,82 @@
         height: 56px;
       }
     }
+    /* Matrix Canvas */
+    #matrix-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background: transparent;
+    }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
+  <canvas id="matrix-canvas"></canvas>
   <div class="card">
     <img class="logo" src="files/images/vngicon.png" alt="Logo Bywarrior">
     <div class="main-title">Bywarrior™</div>
-    <div class="sub-title">creatividad | código | actitud</div>
+    <div class="sub-title">Digital Sanctuary</div>
     <div class="chip">Dark Mode</div>
-    <div class="tagline">Un espacio digital, singular y sin límites.<br>Explora. Inspírate. Imagina. </div>
+    <div class="desc">
+      Un refugio creativo en la era digital.<br>
+      Aquí convergen ideas, código y diseño.<br>
+      Experimenta, aprende, evoluciona.<br><br>
+      <span style="color:var(--accent2); font-weight:700;">Bienvenido a tu próximo nivel.</span>
+    </div>
     <footer>
-      <span>2025 &mdash; powered by GitHub Pages</span>
+      &copy; 2025 &mdash; Crafted for the curious mind
     </footer>
   </div>
   <script>
+    // MATRIX ANIMATION
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    // characters - taken from Unicode matrix effect
+    const letters = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const fontSize = 18;
+    const columns = Math.floor(width / fontSize);
+    // an array of drops - one per column
+    const drops = [];
+    for (let x = 0; x < columns; x++) {
+      drops[x] = Math.random() * -100;
+    }
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(24, 24, 36, 0.48)";
+      ctx.fillRect(0, 0, width, height);
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        let text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillStyle = "#41ff9b";
+        ctx.shadowColor = "#41ff9b";
+        ctx.shadowBlur = 8;
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.shadowBlur = 0;
+        // send the drop back to the top randomly after it has crossed the screen
+        if (drops[i] * fontSize > height && Math.random() > 0.96) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 45);
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
     // Deshabilitar menú contextual (clic derecho)
     document.addEventListener("contextmenu", function(e){
       e.preventDefault();
