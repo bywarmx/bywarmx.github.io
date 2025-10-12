@@ -5,77 +5,128 @@
   <title>Bywarrior™</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="files/images/vngicon.png" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:900,700,400&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f7fafc 0%, #e3e6f3 100%);
+      background: radial-gradient(ellipse at 70% 40%, #24243e 0%, #16161a 100%);
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       font-family: 'Montserrat', Verdana, Arial, sans-serif;
     }
-    .container {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12);
-      padding: 56px 38px 38px 38px;
-      max-width: 390px;
+    .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, #3f72af30 1%, #16161a00 70%);
+      filter: blur(56px);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+      animation: pulseGlow 3.5s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.6;}
+      100% { opacity: 1;}
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(29, 30, 38, 0.92);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.30);
+      padding: 58px 42px 38px 42px;
+      max-width: 370px;
       width: 100%;
       text-align: center;
-      position: relative;
-      animation: fadeIn 0.9s cubic-bezier(.22,.68,.62,1.11);
+      border: 1.5px solid #3f72af55;
+      animation: slideDown 0.9s cubic-bezier(.22,.68,.62,1.11);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(32px);}
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-48px);}
       to { opacity: 1; transform: translateY(0);}
     }
     .logo {
-      width: 72px;
-      height: 72px;
-      border-radius: 14px;
-      margin-bottom: 22px;
-      box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
-      background: #f7fafc;
+      width: 82px;
+      height: 82px;
+      border-radius: 18px;
+      margin-bottom: 28px;
+      margin-top: -12px;
+      box-shadow: 0 2px 20px #3f72af33;
+      background: #16161a;
       object-fit: cover;
+      border: 2px solid #eebbc3;
+      animation: spinLogo 1.8s cubic-bezier(.22,.68,.62,1.11) 1;
     }
-    .title {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: #364F6B;
+    @keyframes spinLogo {
+      from { transform: scale(0.85) rotate(-60deg);}
+      to { transform: scale(1) rotate(0);}
+    }
+    .main-title {
+      font-size: 2.7rem;
+      font-weight: 900;
+      color: #eebbc3;
+      letter-spacing: 2.5px;
       margin-bottom: 12px;
-      letter-spacing: 1.5px;
+      filter: drop-shadow(0 2px 12px #eebbc360);
+      text-shadow: 0 2px 12px #16161a44;
+      text-transform: uppercase;
     }
-    .subtitle {
-      font-size: 1.15rem;
-      color: #3f72af;
-      margin-bottom: 24px;
-      font-weight: 500;
-      letter-spacing: 1px;
+    .sub-title {
+      font-size: 1.13rem;
+      color: #9ac7e2;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+      opacity: 0.96;
     }
-    .desc {
+    .tagline {
       font-size: 1rem;
-      color: #22223b;
-      margin-bottom: 14px;
+      color: #eaeaea;
       font-weight: 400;
-      line-height: 1.6;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      opacity: 0.85;
+      font-family: 'Montserrat', Verdana, Arial, sans-serif;
+    }
+    .chip {
+      display: inline-block;
+      background: linear-gradient(90deg, #3f72af 0%, #eebbc3 100%);
+      color: #16161a;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 7px 18px;
+      margin: 12px 0 18px 0;
+      box-shadow: 0 2px 12px #eebbc370;
+      letter-spacing: 1.15px;
+      opacity: 0.93;
+      user-select: none;
+      border: none;
     }
     footer {
-      font-size: 0.9rem;
-      color: #b3b3b3;
-      margin-top: 28px;
-      letter-spacing: 0.8px;
+      font-size: 0.86rem;
+      color: #3e3e54;
+      margin-top: 26px;
+      letter-spacing: 1px;
+      opacity: 0.68;
     }
     /* Responsive */
     @media (max-width: 480px) {
-      .container {
-        padding: 32px 12px;
+      .card {
+        padding: 32px 10px;
         max-width: 98vw;
       }
-      .title {
-        font-size: 2rem;
+      .main-title {
+        font-size: 2.1rem;
       }
       .logo {
         width: 56px;
@@ -85,15 +136,15 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="glow"></div>
+  <div class="card">
     <img class="logo" src="files/images/vngicon.png" alt="Logo Bywarrior">
-    <div class="title">Bywarrior™</div>
-    <div class="subtitle">Bienvenido</div>
-    <div class="desc">
-      Este sitio es un alojamiento de códigos personales, proyectos y recursos de interés.
-    </div>
+    <div class="main-title">Bywarrior™</div>
+    <div class="sub-title">creatividad | código | actitud</div>
+    <div class="chip">Dark Mode</div>
+    <div class="tagline">Un espacio digital, singular y sin límites.<br>Explora. Inspírate. Imagina. </div>
     <footer>
-      © 2025 | Sitio generado con GitHub Pages
+      <span>2025 &mdash; powered by GitHub Pages</span>
     </footer>
   </div>
   <script>
