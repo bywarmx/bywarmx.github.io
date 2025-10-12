@@ -61,7 +61,7 @@
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.5);
         }
         
-        /* Modal de contacto */
+        /* Modal de contacto - CENTRADO */
         .modal {
             display: none;
             position: fixed;
@@ -93,11 +93,16 @@
             animation: slideUp 0.4s;
             max-height: 90vh;
             overflow-y: auto;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { transform: translate(-50%, -40%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
         }
         
         .modal-content::before {
@@ -334,6 +339,7 @@
             .modal-content {
                 padding: 25px;
                 margin: 20px;
+                width: calc(100% - 40px);
             }
             
             .button-container {
