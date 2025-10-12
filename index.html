@@ -1,212 +1,250 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <title>Bywarrior™</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="files/images/vngicon.png" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:900,700,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-main: #181824;
-      --bg-card: #22223b;
-      --accent: #eebbc3;
-      --accent2: #3f72af;
-      --text-main: #eaeaea;
-      --text-muted: #9ca3af;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      min-height: 100vh;
-      background: var(--bg-main);
-      overflow: hidden;
-      font-family: 'Montserrat', Verdana, Arial, sans-serif;
-    }
-    .card {
-      position: relative;
-      z-index: 1;
-      background: var(--bg-card);
-      border-radius: 22px;
-      box-shadow: 0 8px 36px rgba(34,34,59,0.38);
-      padding: 58px 42px 38px 42px;
-      max-width: 370px;
-      width: 100%;
-      text-align: center;
-      border: 1.5px solid var(--accent2);
-      animation: slideDown 0.9s cubic-bezier(.22,.68,.62,1.11);
-      margin: auto;
-      top: 0; left: 0; right: 0; bottom: 0;
-      position: absolute;
-      height: fit-content;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-48px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .logo {
-      width: 82px;
-      height: 82px;
-      border-radius: 18px;
-      margin-bottom: 28px;
-      margin-top: -12px;
-      box-shadow: 0 2px 20px #3f72af33;
-      background: #16161a;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      animation: spinLogo 1.8s cubic-bezier(.22,.68,.62,1.11) 1;
-    }
-    @keyframes spinLogo {
-      from { transform: scale(0.85) rotate(-60deg);}
-      to { transform: scale(1) rotate(0);}
-    }
-    .main-title {
-      font-size: 2.7rem;
-      font-weight: 900;
-      color: var(--accent);
-      letter-spacing: 2.5px;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 2px 12px #eebbc360);
-      text-shadow: 0 2px 12px #16161a44;
-      text-transform: uppercase;
-    }
-    .sub-title {
-      font-size: 1.13rem;
-      color: var(--accent2);
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      margin-bottom: 32px;
-      text-transform: uppercase;
-      opacity: 0.93;
-    }
-    .desc {
-      font-size: 1rem;
-      color: var(--text-main);
-      font-weight: 400;
-      letter-spacing: 1px;
-      margin-bottom: 24px;
-      opacity: 0.86;
-      font-family: 'Montserrat', Verdana, Arial, sans-serif;
-      line-height: 1.6;
-    }
-    .chip {
-      display: inline-block;
-      background: linear-gradient(90deg, var(--accent2) 0%, var(--accent) 100%);
-      color: #181824;
-      font-size: 0.99rem;
-      font-weight: 700;
-      border-radius: 12px;
-      padding: 8px 20px;
-      margin: 14px 0 18px 0;
-      box-shadow: 0 2px 12px #eebbc370;
-      letter-spacing: 1.1px;
-      opacity: 0.96;
-      user-select: none;
-      border: none;
-      text-transform: uppercase;
-    }
-    footer {
-      font-size: 0.93rem;
-      color: var(--text-muted);
-      margin-top: 22px;
-      letter-spacing: 1px;
-      opacity: 0.7;
-    }
-    /* Responsive */
-    @media (max-width: 480px) {
-      .card {
-        padding: 32px 10px;
-        max-width: 98vw;
-      }
-      .main-title {
-        font-size: 2.1rem;
-      }
-      .logo {
-        width: 56px;
-        height: 56px;
-      }
-    }
-    /* Matrix Canvas */
-    #matrix-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.22;
-      background: transparent;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot de Mensajería Telegram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 120px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        #sendButton {
+            background-color: #667eea;
+            color: white;
+        }
+        
+        #sendButton:hover {
+            background-color: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        #clearButton {
+            background-color: #f1f3f4;
+            color: #444;
+        }
+        
+        #clearButton:hover {
+            background-color: #e4e6e8;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .telegram-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #0088cc;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="matrix-canvas"></canvas>
-  <div class="card">
-    <img class="logo" src="files/images/vngicon.png" alt="Logo Bywarrior">
-    <div class="main-title">Bywarrior™</div>
-    <div class="sub-title">Digital Sanctuary</div>
-    <div class="chip">Dark Mode</div>
-    <div class="desc">
-      Un refugio creativo en la era digital.<br>
-      Aquí convergen ideas, código y diseño.<br>
-      Experimenta, aprende, evoluciona.<br><br>
-      <span style="color:var(--accent2); font-weight:700;">Bienvenido a tu próximo nivel.</span>
+    <div class="container">
+        <div class="telegram-icon">📱</div>
+        <h1>Bot de Mensajería</h1>
+        <p class="description">Envía mensajes a través de Telegram usando el bot configurado</p>
+        
+        <div class="form-group">
+            <label for="message">Mensaje:</label>
+            <textarea id="message" placeholder="Escribe tu mensaje aquí..."></textarea>
+        </div>
+        
+        <div class="button-container">
+            <button id="sendButton">Enviar Mensaje</button>
+            <button id="clearButton">Limpiar</button>
+        </div>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="footer">
+            <p>Este servicio utiliza la API de Telegram para enviar mensajes</p>
+        </div>
     </div>
-    <footer>
-      &copy; 2025 &mdash; Crafted for the curious mind
-    </footer>
-  </div>
-  <script>
-    // MATRIX ANIMATION
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
 
-    // characters - taken from Unicode matrix effect
-    const letters = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const fontSize = 18;
-    const columns = Math.floor(width / fontSize);
-    // an array of drops - one per column
-    const drops = [];
-    for (let x = 0; x < columns; x++) {
-      drops[x] = Math.random() * -100;
-    }
-
-    function drawMatrix() {
-      ctx.fillStyle = "rgba(24, 24, 36, 0.48)";
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = fontSize + "px monospace";
-      for (let i = 0; i < drops.length; i++) {
-        let text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillStyle = "#41ff9b";
-        ctx.shadowColor = "#41ff9b";
-        ctx.shadowBlur = 8;
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        ctx.shadowBlur = 0;
-        // send the drop back to the top randomly after it has crossed the screen
-        if (drops[i] * fontSize > height && Math.random() > 0.96) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-    setInterval(drawMatrix, 45);
-
-    window.addEventListener('resize', () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    });
-
-    // Deshabilitar menú contextual (clic derecho)
-    document.addEventListener("contextmenu", function(e){
-      e.preventDefault();
-    });
-  </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const botToken = '8157586356:AAGCyVhrGzUhdziV6b9AZsfLkBvqcuL70_k';
+            const chatId = '394034313';
+            
+            // Función para mostrar estado
+            function showStatus(message, type) {
+                const status = $('#status');
+                status.removeClass('success error info');
+                status.addClass(type);
+                status.text(message);
+                status.fadeIn();
+                
+                setTimeout(function() {
+                    status.fadeOut();
+                }, 5000);
+            }
+            
+            // Enviar mensaje
+            $('#sendButton').click(function() {
+                const message = $('#message').val().trim();
+                
+                if (!message) {
+                    showStatus('Por favor, escribe un mensaje antes de enviar.', 'error');
+                    return;
+                }
+                
+                // Mostrar estado de envío
+                showStatus('Enviando mensaje...', 'info');
+                
+                // Deshabilitar botón mientras se envía
+                $('#sendButton').prop('disabled', true).text('Enviando...');
+                
+                // Enviar mensaje a través de la API de Telegram
+                $.ajax({
+                    url: `https://api.telegram.org/bot${botToken}/sendMessage`,
+                    method: 'POST',
+                    data: {
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    },
+                    success: function(response) {
+                        if (response.ok) {
+                            showStatus('¡Mensaje enviado correctamente!', 'success');
+                            $('#message').val('');
+                        } else {
+                            showStatus('Error al enviar el mensaje: ' + response.description, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        showStatus('Error de conexión: ' + error, 'error');
+                    },
+                    complete: function() {
+                        // Restaurar botón
+                        $('#sendButton').prop('disabled', false).text('Enviar Mensaje');
+                    }
+                });
+            });
+            
+            // Limpiar mensaje
+            $('#clearButton').click(function() {
+                $('#message').val('');
+                showStatus('Campo de mensaje limpiado', 'info');
+            });
+            
+            // Permitir enviar con Ctrl+Enter
+            $('#message').keydown(function(e) {
+                if (e.ctrlKey && e.keyCode === 13) {
+                    $('#sendButton').click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
